@@ -1,0 +1,29 @@
+.venv/
+.deployment/
+__pycache__/
+*.pyc
+.env
+# .env 的各种变体(备份、按环境分的副本)同样含真实密钥,必须一起挡住。
+# 只放行 .env.example —— 它是对外发布的模板,里面只有占位符。
+.env.*
+!.env.example
+.pytest_cache/
+.superpowers/
+data/*.db*
+data/*.sqlite*
+dev-notes/
+log/
+logs/
+*.pid
+data/ch10/*
+!data/ch10/reports
+
+# 运行日志:后台页发起的作业与 dev.sh 启动日志,本地产物不入库
+data/*.log
+data/ch04/*.log
+
+# MCode 桌面端会话运行时产物(hook 状态、历史快照、任务报告),本地产物不入库
+.mimosa/
+
+# 本机特定端口映射(宿主机 3306 被原生 MySQL 占用,容器改走 3307),不入库
+docker-compose.override.yml
