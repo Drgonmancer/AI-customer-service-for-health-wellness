@@ -34,8 +34,8 @@ MewHelp 把多轮对话、业务工具、知识库检索与人工确认组合成
 ### 1. 获取项目并安装依赖
 
 ```bash
-git clone https://github.com/Drgonmancer/MewHelp.git
-cd MewHelp
+git clone https://github.com/Drgonmancer/AI-customer-service-for-health-wellness.git
+cd AI-customer-service-for-health-wellness
 uv sync --locked
 cp .env.example .env
 ```
