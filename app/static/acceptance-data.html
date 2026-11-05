@@ -4,13 +4,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>槐花优选 · 分类器数据产物</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'><rect x='7' y='1' width='2' height='1' fill='%233e5c30'/><rect x='6' y='2' width='4' height='3' fill='%235e8c4a'/><rect x='5' y='5' width='6' height='1' fill='%23c0392b'/><rect x='4' y='6' width='8' height='7' fill='%235e8c4a'/><rect x='3' y='7' width='1' height='5' fill='%235e8c4a'/><rect x='12' y='7' width='1' height='5' fill='%235e8c4a'/><rect x='5' y='13' width='6' height='1' fill='%235e8c4a'/><rect x='5' y='7' width='1' height='2' fill='%23a8c686'/><rect x='6' y='6' width='1' height='1' fill='%23a8c686'/></svg>" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%232f6fed'/><g transform='translate(32 33)'><circle cx='0' cy='-6.6' r='5' fill='%23fff'/><circle cx='6.3' cy='-2' r='5' fill='%23fff'/><circle cx='3.9' cy='5.4' r='5' fill='%23fff'/><circle cx='-3.9' cy='5.4' r='5' fill='%23fff'/><circle cx='-6.3' cy='-2' r='5' fill='%23fff'/><circle r='3' fill='%23f5bd4f'/></g></svg>" />
   <link rel="stylesheet" href="/static/acceptance.css" />
   <style>
     /* 语料血缘:四段落差一行摆开 */
     .flow { display: flex; align-items: stretch; gap: 6px; flex-wrap: wrap; }
     .step {
-      border: 3px solid var(--ink); background: var(--paper); padding: 9px 12px;
+      border: 1px solid var(--border); background: var(--surface-2); border-radius: 10px;
+      padding: 9px 12px;
       min-width: 150px; flex: 1;
     }
     .step .stage { font-size: 11.5px; color: var(--muted); }
@@ -18,14 +19,14 @@
     .step .desc { font-size: 11.5px; line-height: 1.65; margin-top: 3px; }
     .step .f { font-size: 11px; color: var(--muted); margin-top: 4px; word-break: break-all; }
     .step.miss b { color: var(--muted); }
-    .arrow { align-self: center; font-size: 20px; color: var(--ink); font-weight: 700; }
+    .arrow { align-self: center; font-size: 20px; color: var(--muted); font-weight: 700; }
     .splitgrid { display: flex; gap: 6px; flex-wrap: wrap; }
-    .step.exam { background: var(--cream); }
+    .step.exam { background: var(--surface); border-color: var(--fur); }
 
     /* 三份考卷各类分布:类目为行,三卷为列 */
     td.b { padding: 0 !important; }
     .distbar { display: flex; align-items: center; gap: 6px; padding: 3px 8px; }
-    .distbar .track { flex: 1; min-width: 40px; height: 9px; border: 2px solid var(--ink); background: var(--cream); }
+    .distbar .track { flex: 1; min-width: 40px; height: 9px; border: 1px solid var(--border); background: var(--surface-2); border-radius: 999px; overflow: hidden; }
     .distbar .fill { height: 100%; background: var(--fur); display: block; }
     .distbar .v { width: 2.6em; text-align: right; font-variant-numeric: tabular-nums; }
     .leak { display: flex; gap: 12px; flex-wrap: wrap; }

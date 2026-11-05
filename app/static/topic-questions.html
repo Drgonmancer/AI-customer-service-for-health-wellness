@@ -4,26 +4,28 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>槐花优选 · 类目问题列表</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'><rect x='7' y='1' width='2' height='1' fill='%233e5c30'/><rect x='6' y='2' width='4' height='3' fill='%235e8c4a'/><rect x='5' y='5' width='6' height='1' fill='%23c0392b'/><rect x='4' y='6' width='8' height='7' fill='%235e8c4a'/><rect x='3' y='7' width='1' height='5' fill='%235e8c4a'/><rect x='12' y='7' width='1' height='5' fill='%235e8c4a'/><rect x='5' y='13' width='6' height='1' fill='%235e8c4a'/><rect x='5' y='7' width='1' height='2' fill='%23a8c686'/><rect x='6' y='6' width='1' height='1' fill='%23a8c686'/></svg>" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%232f6fed'/><g transform='translate(32 33)'><circle cx='0' cy='-6.6' r='5' fill='%23fff'/><circle cx='6.3' cy='-2' r='5' fill='%23fff'/><circle cx='3.9' cy='5.4' r='5' fill='%23fff'/><circle cx='-3.9' cy='5.4' r='5' fill='%23fff'/><circle cx='-6.3' cy='-2' r='5' fill='%23fff'/><circle r='3' fill='%23f5bd4f'/></g></svg>" />
   <link rel="stylesheet" href="/static/acceptance.css" />
   <style>
     /* 一行一条问题:问法在前,来源与频次在后,多标签的把同伴类目也摆出来 */
     .qrow {
-      border: 3px solid var(--ink); background: var(--paper); box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border); background: var(--surface-2); box-shadow: var(--shadow-sm);
+      border-radius: 10px;
       padding: 10px 13px; margin-top: 10px;
     }
     .qrow .q { font-size: 13.5px; font-weight: 700; line-height: 1.6; }
     .qrow .q .id { font-size: 11px; font-weight: 400; color: var(--muted); margin-right: 7px; }
     .qrow .meta {
       margin-top: 6px; display: flex; flex-wrap: wrap; gap: 6px 14px;
-      font-size: 11.5px; color: #6d6478; align-items: center;
+      font-size: 11.5px; color: var(--muted); align-items: center;
     }
     .qrow .meta b { color: var(--ink); }
     .tag {
-      font-size: 11px; border: 2px solid var(--ink); background: var(--cream); padding: 0 5px;
+      font-size: 11px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface);
+      padding: 1px 8px;
     }
-    .tag.self { background: var(--fur); font-weight: 700; }
-    .raw { margin-top: 7px; font-size: 12px; color: #6d6478; line-height: 1.7; }
+    .tag.self { background: var(--fur); border-color: var(--fur); color: #fff; font-weight: 700; }
+    .raw { margin-top: 7px; font-size: 12px; color: var(--muted); line-height: 1.7; }
     .raw .k { font-size: 10.5px; color: var(--muted); display: block; }
 
     .pager { margin-top: 16px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
@@ -31,12 +33,14 @@
     .pager .info b { font-variant-numeric: tabular-nums; }
     .picker { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
     .picker a {
-      font-size: 12px; text-decoration: none; color: var(--ink); border: 3px solid var(--ink);
-      background: var(--paper); padding: 3px 9px; box-shadow: 2px 2px 0 var(--ink);
+      font-size: 12px; text-decoration: none; color: var(--ink); border: 1px solid var(--border);
+      border-radius: 999px; background: var(--surface); padding: 3px 10px; box-shadow: var(--shadow-sm);
+      transition: all .15s ease;
     }
-    .picker a.on { background: var(--fur); font-weight: 700; }
+    .picker a:hover { background: #eaf1fe; border-color: var(--fur); }
+    .picker a.on { background: var(--fur); border-color: var(--fur); color: #fff; font-weight: 700; }
     .picker a .n { color: var(--muted); margin-left: 5px; }
-    .picker a.on .n { color: var(--ink); }
+    .picker a.on .n { color: #fff; }
     .picker a.zero { opacity: .45; }
   </style>
 </head>

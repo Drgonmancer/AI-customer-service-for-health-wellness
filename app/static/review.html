@@ -4,130 +4,163 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>槐花优选 · 飞轮待审队列</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'><rect x='7' y='1' width='2' height='1' fill='%233e5c30'/><rect x='6' y='2' width='4' height='3' fill='%235e8c4a'/><rect x='5' y='5' width='6' height='1' fill='%23c0392b'/><rect x='4' y='6' width='8' height='7' fill='%235e8c4a'/><rect x='3' y='7' width='1' height='5' fill='%235e8c4a'/><rect x='12' y='7' width='1' height='5' fill='%235e8c4a'/><rect x='5' y='13' width='6' height='1' fill='%235e8c4a'/><rect x='5' y='7' width='1' height='2' fill='%23a8c686'/><rect x='6' y='6' width='1' height='1' fill='%23a8c686'/></svg>" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%232f6fed'/><g transform='translate(32 33)'><circle cx='0' cy='-6.6' r='5' fill='%23fff'/><circle cx='6.3' cy='-2' r='5' fill='%23fff'/><circle cx='3.9' cy='5.4' r='5' fill='%23fff'/><circle cx='-3.9' cy='5.4' r='5' fill='%23fff'/><circle cx='-6.3' cy='-2' r='5' fill='%23fff'/><circle r='3' fill='%23f5bd4f'/></g></svg>" />
   <style>
+    /* ===== 方案A · 医疗信任蓝 ===== */
     :root {
-      --ink: #2b2632;
-      --fur: #ff9f57;
-      --coral: #ff7a59;
-      --cream: #fff6e6;
-      --paper: #fffaf0;
-      --muted: #9b8f86;
-      --error: #d6455a;
-      --online: #5fcf6a;
-      --shadow: 4px 4px 0 var(--ink);
-      --shadow-sm: 3px 3px 0 var(--ink);
-      --shadow-lg: 8px 8px 0 var(--ink);
+      --ink: #1e293b;
+      --fur: #2f6fed;
+      --coral: #2f6fed;
+      --cream: #ffffff;
+      --paper: #f6f9fd;
+      --muted: #8494a8;
+      --error: #dc4a5e;
+      --online: #22c55e;
+      --shadow: 0 2px 8px rgba(30,41,59,.07);
+      --shadow-sm: 0 1px 2px rgba(30,41,59,.05);
+      --shadow-lg: 0 12px 40px rgba(30,41,59,.12);
+      --bg: #eef3f9;
+      --surface: #ffffff;
+      --surface-2: #f6f9fd;
+      --border: #e3eaf3;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; min-height: 100%; }
     body {
-      font-family: ui-monospace, "SF Mono", "Cascadia Mono", Consolas,
-        "PingFang SC", "Microsoft YaHei", monospace;
+      font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", system-ui, sans-serif;
       color: var(--ink);
-      background-color: #f7d9a8;
-      background-image:
-        linear-gradient(rgba(43,38,50,0.05) 2px, transparent 2px),
-        linear-gradient(90deg, rgba(43,38,50,0.05) 2px, transparent 2px);
-      background-size: 24px 24px;
+      background-color: var(--bg);
       padding: 24px 16px 64px;
     }
     .wrap { max-width: 1080px; margin: 0 auto; }
 
     /* 顶栏 */
     .topbar {
-      background: var(--cream); border: 4px solid var(--ink); box-shadow: var(--shadow-lg);
+      background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+      box-shadow: var(--shadow-sm);
       padding: 14px 18px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
     }
     .topbar h1 { font-size: 18px; margin: 0; letter-spacing: 1px; }
     .topbar .sub { color: var(--muted); font-size: 12px; }
     .spacer { flex: 1; }
-    .seg { display: flex; border: 3px solid var(--ink); background: var(--paper); }
+    .seg {
+      display: flex; border: 1px solid var(--border); background: var(--surface);
+      border-radius: 8px; overflow: hidden;
+    }
     .seg button {
       border: 0; background: transparent; padding: 6px 12px; font: inherit; cursor: pointer;
-      border-right: 3px solid var(--ink);
+      color: var(--ink); border-right: 1px solid var(--border); transition: background .15s ease;
     }
+    .seg button:hover { background: #eaf1fe; }
     .seg button:last-child { border-right: 0; }
-    .seg button.on { background: var(--fur); font-weight: 700; }
+    .seg button.on { background: var(--fur); color: #fff; font-weight: 600; }
     .btn {
-      font: inherit; cursor: pointer; border: 3px solid var(--ink); background: var(--paper);
-      padding: 6px 14px; box-shadow: var(--shadow-sm); font-weight: 700;
+      font: inherit; cursor: pointer; border: 1px solid var(--border); background: var(--surface);
+      color: var(--ink); padding: 6px 14px; border-radius: 8px; box-shadow: var(--shadow-sm);
+      font-weight: 600; transition: all .15s ease;
     }
-    .btn:active { transform: translate(2px,2px); box-shadow: 1px 1px 0 var(--ink); }
-    .btn.ok { background: var(--online); }
-    .btn.no { background: var(--error); color: #fff; }
+    .btn:hover:not(:disabled):not(.ok):not(.no) { background: #eaf1fe; border-color: var(--fur); color: var(--fur); }
+    .btn:active:not(:disabled) { transform: scale(.97); }
+    .btn.ok { background: var(--online); border-color: var(--online); color: #fff; }
+    .btn.no { background: var(--error); border-color: var(--error); color: #fff; }
+    .btn.ok:hover:not(:disabled), .btn.no:hover:not(:disabled) { filter: brightness(1.06); }
     .btn:disabled { opacity: .45; cursor: not-allowed; }
 
     /* 三道闸提示 */
     .gates {
-      margin-top: 16px; background: var(--paper); border: 3px dashed var(--ink);
+      margin-top: 16px; background: var(--surface); border: 1px dashed var(--border);
+      border-radius: 12px;
       padding: 10px 14px; font-size: 12.5px; line-height: 1.8;
     }
-    .gates b { background: var(--fur); padding: 0 6px; border: 2px solid var(--ink); margin-right: 4px; }
+    .gates b {
+      background: var(--fur); color: #fff; padding: 1px 7px; border-radius: 999px;
+      margin-right: 4px; font-weight: 600;
+    }
 
     /* 列表 */
     .list { margin-top: 16px; display: flex; flex-direction: column; gap: 14px; }
-    .card { background: var(--cream); border: 4px solid var(--ink); box-shadow: var(--shadow); }
-    .row-main { display: flex; align-items: center; gap: 12px; padding: 12px 16px; cursor: pointer; }
-    .row-main:hover { background: var(--paper); }
-    .qtext { font-weight: 700; font-size: 14.5px; flex: 1; min-width: 240px; }
+    .card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+      box-shadow: var(--shadow-sm); overflow: hidden;
+    }
+    .row-main {
+      display: flex; align-items: center; gap: 12px; padding: 12px 16px; cursor: pointer;
+      transition: background .15s ease;
+    }
+    .row-main:hover { background: var(--surface-2); }
+    .qtext { font-weight: 600; font-size: 14.5px; flex: 1; min-width: 240px; }
     .ans-preview { color: var(--muted); font-size: 12px; max-width: 320px;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .badge {
-      border: 2.5px solid var(--ink); padding: 2px 8px; font-size: 12px; font-weight: 700;
-      background: var(--paper); white-space: nowrap;
+      border: 1px solid var(--border); padding: 2px 9px; font-size: 12px; font-weight: 600;
+      background: var(--surface-2); white-space: nowrap; border-radius: 999px;
     }
-    .badge.hot { background: var(--coral); color: #fff; }
-    .badge.st-待审 { background: var(--fur); }
-    .badge.st-通过 { background: var(--online); }
-    .badge.st-驳回 { background: var(--error); color: #fff; }
+    .badge.hot { background: #f59e0b; border-color: #f59e0b; color: #fff; }
+    .badge.st-待审 { background: var(--fur); border-color: var(--fur); color: #fff; }
+    .badge.st-通过 { background: var(--online); border-color: var(--online); color: #fff; }
+    .badge.st-驳回 { background: var(--error); border-color: var(--error); color: #fff; }
     .ops { display: flex; gap: 8px; }
 
     /* 详情展开 */
-    .detail { border-top: 3px solid var(--ink); background: var(--paper); padding: 14px 16px; display: none; }
+    .detail {
+      border-top: 1px solid var(--border); background: var(--surface-2);
+      padding: 14px 16px; display: none;
+    }
     .card.open .detail { display: block; }
     .hint { color: var(--muted); font-size: 12px; margin: 4px 0 10px; }
     .raw {
-      border: 3px solid var(--ink); background: var(--cream); margin-bottom: 12px; padding: 10px 12px;
+      border: 1px solid var(--border); background: var(--surface); border-radius: 10px;
+      box-shadow: var(--shadow-sm); margin-bottom: 12px; padding: 10px 12px;
     }
     .raw .head { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 6px; }
-    .src { border: 2px solid var(--ink); padding: 1px 7px; font-size: 11.5px; font-weight: 700; }
-    .src-retrieval_low_conf { background: #ffd66e; }
-    .src-self_check { background: #b7a6ff; }
-    .src-user_feedback { background: #ff8095; }
+    .src { border: 1px solid transparent; padding: 1px 8px; font-size: 11.5px; font-weight: 600; border-radius: 999px; }
+    .src-retrieval_low_conf { background: #fef3c7; color: #b45309; }
+    .src-self_check { background: #eaf1fe; color: var(--fur); }
+    .src-user_feedback { background: #fde8ea; color: var(--error); }
     .raw .when { color: var(--muted); font-size: 11.5px; }
     .raw .q { font-size: 13.5px; margin: 2px 0 8px; }
     .snaps { display: flex; flex-direction: column; gap: 8px; }
-    .snap { border: 2px dashed var(--ink); padding: 8px 10px; background: var(--paper); font-size: 12.5px; }
-    .snap .sq { font-weight: 700; }
-    .snap .sa { margin: 3px 0; color: #4c4456; }
+    .snap {
+      border: 1px dashed var(--border); border-radius: 8px; padding: 8px 10px;
+      background: var(--surface-2); font-size: 12.5px;
+    }
+    .snap .sq { font-weight: 600; }
+    .snap .sa { margin: 3px 0; color: #475569; }
     .meter { display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: var(--muted); }
-    .meter .bar { height: 8px; width: 140px; border: 2px solid var(--ink); background: var(--paper); }
-    .meter .fill { height: 100%; background: var(--coral); }
-    .nosnap { color: var(--muted); font-size: 12px; border: 2px dashed var(--muted); padding: 6px 10px; }
+    .meter .bar {
+      height: 8px; width: 140px; border: 1px solid var(--border);
+      background: var(--surface); border-radius: 999px; overflow: hidden;
+    }
+    .meter .fill { height: 100%; background: var(--fur); }
+    .nosnap { color: var(--muted); font-size: 12px; border: 1px dashed var(--border); border-radius: 8px; padding: 6px 10px; }
 
-    .empty { text-align: center; color: var(--muted); padding: 48px 0; font-size: 14px;
-      background: var(--cream); border: 4px solid var(--ink); box-shadow: var(--shadow); }
+    .empty {
+      text-align: center; color: var(--muted); padding: 48px 0; font-size: 14px;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+      box-shadow: var(--shadow-sm);
+    }
 
     /* 通过弹框 */
-    .mask { position: fixed; inset: 0; background: rgba(43,38,50,.45); display: none;
+    .mask { position: fixed; inset: 0; background: rgba(15,23,42,.45); display: none;
       justify-content: center; align-items: center; z-index: 50; }
     .mask.open { display: flex; }
-    .modal { width: min(560px, 92vw); background: var(--cream); border: 4px solid var(--ink);
-      box-shadow: var(--shadow-lg); padding: 18px; }
+    .modal { width: min(560px, 92vw); background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; box-shadow: var(--shadow-lg); padding: 18px; }
     .modal h3 { margin: 0 0 4px; font-size: 15px; }
-    .modal .mq { font-size: 13px; color: #4c4456; margin-bottom: 10px; }
+    .modal .mq { font-size: 13px; color: #475569; margin-bottom: 10px; }
     .modal textarea {
       width: 100%; min-height: 130px; font: inherit; font-size: 13px; padding: 10px;
-      border: 3px solid var(--ink); background: var(--paper); resize: vertical;
+      border: 1px solid var(--border); background: var(--surface-2); border-radius: 10px;
+      resize: vertical; transition: border-color .15s ease;
     }
+    .modal textarea:focus { outline: none; border-color: var(--fur); background: var(--surface); }
     .modal .foot { display: flex; gap: 10px; justify-content: flex-end; margin-top: 12px; }
 
     /* toast */
     #toast {
       position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%);
-      background: var(--ink); color: var(--cream); padding: 10px 18px; font-size: 13px;
-      border: 3px solid var(--ink); box-shadow: var(--shadow-sm); display: none; z-index: 99;
+      background: var(--ink); color: #fff; padding: 10px 18px; font-size: 13px;
+      border-radius: 999px; box-shadow: var(--shadow-lg); display: none; z-index: 99;
       max-width: 84vw;
     }
     #toast.err { background: var(--error); color: #fff; }

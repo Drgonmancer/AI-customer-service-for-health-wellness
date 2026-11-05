@@ -4,19 +4,20 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>槐花优选 · 观测与成本</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'><rect x='7' y='1' width='2' height='1' fill='%233e5c30'/><rect x='6' y='2' width='4' height='3' fill='%235e8c4a'/><rect x='5' y='5' width='6' height='1' fill='%23c0392b'/><rect x='4' y='6' width='8' height='7' fill='%235e8c4a'/><rect x='3' y='7' width='1' height='5' fill='%235e8c4a'/><rect x='12' y='7' width='1' height='5' fill='%235e8c4a'/><rect x='5' y='13' width='6' height='1' fill='%235e8c4a'/><rect x='5' y='7' width='1' height='2' fill='%23a8c686'/><rect x='6' y='6' width='1' height='1' fill='%23a8c686'/></svg>" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%232f6fed'/><g transform='translate(32 33)'><circle cx='0' cy='-6.6' r='5' fill='%23fff'/><circle cx='6.3' cy='-2' r='5' fill='%23fff'/><circle cx='3.9' cy='5.4' r='5' fill='%23fff'/><circle cx='-3.9' cy='5.4' r='5' fill='%23fff'/><circle cx='-6.3' cy='-2' r='5' fill='%23fff'/><circle r='3' fill='%23f5bd4f'/></g></svg>" />
   <link rel="stylesheet" href="/static/acceptance.css" />
   <style>
     .kpis { display: grid; gap: 12px; grid-template-columns: repeat(4, 1fr); margin-top: 4px; }
     @media (max-width: 900px) { .kpis { grid-template-columns: repeat(2, 1fr); } }
     .kpi {
-      background: var(--paper); border: 3px solid var(--ink); box-shadow: var(--shadow-sm);
+      background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-sm);
+      border-radius: 10px;
       padding: 10px 13px 12px;
     }
     .kpi .k-label { font-size: 11.5px; color: var(--muted); }
     .kpi .k-val { font-size: 25px; font-weight: 700; line-height: 1.4; font-variant-numeric: tabular-nums; }
     .kpi .k-val small { font-size: 13px; margin-left: 2px; }
-    .kpi .k-sub { font-size: 11.5px; color: #6d6478; line-height: 1.7; }
+    .kpi .k-sub { font-size: 11.5px; color: var(--muted); line-height: 1.7; }
 
     /* 占比条:一条一意图,长度即占比 */
     .shares { margin-top: 14px; display: flex; flex-direction: column; gap: 11px; }
@@ -24,26 +25,26 @@
     .sh-label .nm b { font-weight: 700; }
     .sh-label .nm span { color: var(--muted); font-size: 11px; margin-left: 7px; }
     .sh-label .pv { font-variant-numeric: tabular-nums; font-weight: 700; }
-    .bar-track { height: 15px; border: 2px solid var(--ink); background: var(--cream); margin-top: 4px; }
+    .bar-track { height: 15px; border: 1px solid var(--border); background: var(--surface-2); margin-top: 4px; border-radius: 999px; overflow: hidden; }
     .bar-fill { height: 100%; display: block; background: var(--sky); }
     .bar-fill.top { background: var(--coral); }
 
     /* 读图小注 */
     .read {
-      margin-top: 13px; border: 3px dashed var(--ink); background: var(--paper);
+      margin-top: 13px; border: 1px dashed #b9cdf0; background: var(--surface-2); border-radius: 10px;
       padding: 9px 13px; font-size: 12.5px; line-height: 1.8;
     }
-    .read b { background: var(--fur); padding: 0 4px; border: 2px solid var(--ink); }
+    .read b { background: var(--fur); color: #fff; padding: 1px 5px; border-radius: 4px; font-weight: 600; }
     .read::before {
-      content: "读图"; float: left; font-size: 11px; background: var(--ink); color: var(--cream);
-      padding: 1px 7px; margin: 2px 9px 2px 0;
+      content: "读图"; float: left; font-size: 11px; background: var(--ink); color: #fff;
+      padding: 1px 7px; margin: 2px 9px 2px 0; border-radius: 4px;
     }
 
     .subhead { font-size: 13px; font-weight: 700; margin: 16px 0 2px; }
     .subhead .unit { color: var(--muted); font-weight: 400; font-size: 11.5px; margin-left: 7px; }
 
-    table.tbl td.up { color: #2f8f3c; }
-    table.tbl td.down { background: #ffe9ec; color: var(--error); font-weight: 700; }
+    table.tbl td.up { color: #16a34a; }
+    table.tbl td.down { background: #fde8ea; color: var(--error); font-weight: 700; }
     table.tbl td.flat { color: var(--muted); }
     table.tbl td .arrow { margin-left: 5px; }
 
@@ -51,22 +52,22 @@
     svg.chart { display: block; width: 100%; height: auto; min-width: 560px; font-family: inherit; }
     svg .axis { fill: var(--muted); font-size: 11px; }
     svg .glabel { fill: var(--ink); font-size: 12px; font-weight: 700; }
-    svg .grid line { stroke: rgba(43,38,50,0.16); stroke-width: 1; }
-    svg .base { stroke: var(--ink); stroke-width: 2.5; }
-    svg .ln { fill: none; stroke-width: 2.5; }
-    svg .pick { stroke: var(--ink); stroke-width: 2; stroke-dasharray: 5 4; }
+    svg .grid line { stroke: rgba(30,41,59,0.08); stroke-width: 1; }
+    svg .base { stroke: var(--border); stroke-width: 1.5; }
+    svg .ln { fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    svg .pick { stroke: var(--ink); stroke-width: 1.5; stroke-dasharray: 5 4; }
     svg .inuse { stroke: var(--violet); stroke-width: 2; }
 
     .legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 10px 0 2px; }
     .lg { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; }
-    .lg i { width: 12px; height: 12px; border: 2px solid var(--ink); flex: none; }
+    .lg i { width: 12px; height: 12px; border: 1px solid var(--border); border-radius: 3px; flex: none; }
 
     .split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     @media (max-width: 860px) { .split { grid-template-columns: 1fr; } }
-    .note { border: 3px solid var(--ink); background: var(--paper); padding: 10px 13px; }
+    .note { border: 1px solid var(--border); background: var(--surface-2); border-radius: 10px; padding: 10px 13px; }
     .note h3 { margin: 0 0 5px; font-size: 12.5px; }
-    .note p { margin: 0; font-size: 12px; color: #6d6478; line-height: 1.8; }
-    .note code { background: var(--cream); border: 2px solid var(--ink); padding: 0 4px; font-size: 11.5px; }
+    .note p { margin: 0; font-size: 12px; color: var(--muted); line-height: 1.8; }
+    .note code { background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 0 4px; font-size: 11.5px; }
   </style>
 </head>
 <body>
